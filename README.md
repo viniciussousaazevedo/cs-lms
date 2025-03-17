@@ -6,7 +6,7 @@ This repository consists of a simple OO project of a Library Management System. 
 - As a User, I want to login, informing email and password
 - As a Librarian, I want to create a Reader, informing name, birthday and email
   - The default password for the Reader to login must be his birthday, in the format DDMMYYYY
-- As a Reader, I want to see my profile, containing my book rental history, name, email
+- As a Reader, I want to see my profile, containing my book rental history, name and email
 - As a Reader, I want to update my profile, editing name, tastes bases on Genre and/or password
 - As a Reader, I want to delete my profile
 

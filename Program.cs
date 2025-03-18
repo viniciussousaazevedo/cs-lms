@@ -1,3 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using cs_lms.controller;
 
-Console.WriteLine("Hello, World!");
+namespace cs_lms;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        LibraryController controller = new LibraryController();
+        Console.Write(controller);
+    }
+}

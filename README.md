@@ -22,7 +22,8 @@ This repository consists of a simple OO project of a Library Management System. 
   - It is only possible to give a score to a book that I have already read
 - As a Reader, I want to return the book that I have rent, paying 2 dollars a day after the limit date tk return, if necessary
 
-![Diagrama em branco](https://github.com/user-attachments/assets/54928039-034f-4cd9-9b08-021d3b74a82c)
+![cs-lms](https://github.com/user-attachments/assets/86ae2423-8d33-4552-ba9d-f4286b47e9e1)
+
 
 ## How to run:
 WIP

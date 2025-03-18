@@ -97,4 +97,13 @@ public class LibraryRepository
         Books.AddRange(b1, b2, b3, b4, b5);
         
     }
+
+    public User? GetUserByEmail(string email)
+    {
+        return (User?) 
+               Readers.Find(r => r.Email == email) 
+               ??
+               Librarians.Find(l => l.Email == email);
+    }
+
 }

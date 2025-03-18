@@ -6,7 +6,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        LibraryController controller = new LibraryController();
+        var controller = new LibraryController();
         Console.Write(controller);
     }
 }

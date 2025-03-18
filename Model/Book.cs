@@ -4,26 +4,25 @@ namespace cs_lms.Model;
 
 using System.ComponentModel.DataAnnotations;
 
-public class Book
+public class Book(string title, string description, string author, Genre genre, string blurb, bool isAvailable)
 {
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = title;
     
     [Required]
-    public string Description { get; set; }
+    public string Description { get; set; } =  description;
     
     [Required]
-    public string Author { get; set; }
+    public string Author { get; set; } = author;
     
     [Required]
-    public Genre Genre { get; set; }
+    public Genre Genre { get; set; } =  genre;
     
     [Required]
-    public string Blurb { get; set; }
+    public string Blurb { get; set; } =  blurb;
     
     [Required]
-    public bool IsAvailable { get; set; }
-    
-    [Required]
-    public List<Score> Scores { get; set; }
+    public bool IsAvailable { get; set; } = isAvailable;
+
+    [Required] public List<Score> Scores { get; set; } = [];
 }

@@ -11,9 +11,9 @@ This repository consists of a simple OO project of a Library Management System. 
 - As a Reader, I want to delete my profile
 
 ### Book
-- As a Librarian, I want to inform that a new book is available, informing title, description, author and genre
+- As a Librarian, I want to inform that a new book is available, informing title, description, blurb, author and genre
 - As a User, I want to see all the books in the system, being able to filter by title, availability, author and/or genre
-- As a Librarian, I want to update a book, editing its title, genre descriprion and/or its availability
+- As a Librarian, I want to update a book, editing its title, blurb, genre descriprion and/or its availability
 - As a Librarian, I want to delete a book from the system
 - As a Reader, I want to ask the system for a suggestion based on my book tastes, author and/or best scores
   - The system must not recommend books that I have already read

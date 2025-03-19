@@ -1,35 +1,47 @@
-﻿using System.Runtime.CompilerServices;
-using cs_lms.controller;
+﻿using cs_lms.controller;
 using cs_lms.Model;
+using cs_lms.interfaces;
+using cs_lms.Util;
 
 namespace cs_lms;
 
-public class Program
+public static class Program
 {
-    private static LibraryController _controller { get; } = new LibraryController();
+    private static LibraryController Controller { get; } = new LibraryController();
+    private static User? _user;
     public static void Main(string[] args)
     {
-        var user = Login();
+        Login();
+        switch (_user)
+        {
+            case Librarian librarian:
+                LibrarianMenu.ShowLibrarianMenu(librarian, Controller);
+                break;
+            case Reader reader:
+                ReaderMenu.ShowReaderMenu(reader, Controller);
+                break;
+        }
     }
 
-    private static User Login()
+    private static void Login()
     {
-        User user = null;
         while (true)
         {
             Console.WriteLine("Hello! Welcome to the Library Management System :)");
             Console.WriteLine("Please, log in to use the system");
-            Console.Write("email: "); string email = Console.ReadLine();
-            Console.Write("password: "); string password = Console.ReadLine();
-            user = _controller.LogIn(email, password);
-            if (user is not null)
+            var email = InputHandler.GetNonEmpty("email: ");
+            var password = InputHandler.GetNonEmpty("password: ");
+            _user = Controller.LogIn(email, password);
+            if (_user is not null)
             {
-                Console.WriteLine("Success!");
+                Console.WriteLine("Success!\n");
                 break;
             }
             Console.WriteLine("Incorrect credentials!\n");
         }
-
-        return user;
     }
+
+    
+
+    
 }

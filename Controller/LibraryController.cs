@@ -17,4 +17,9 @@ public class LibraryController
         var user = _repository.GetUserByEmail(email);
         return user is not null && password == user.Password ? user : null;
     }
+
+    public string CreateReader(string name, string password, DateTime birthDate, string email)
+    {
+        return "so far, so good :)";
+    }
 }

@@ -18,8 +18,19 @@ public class LibraryController
         return user is not null && password == user.Password ? user : null;
     }
 
-    public string CreateReader(string name, string password, DateTime birthDate, string email)
+    public string CreateReader(string name, DateTime birthDate, string email)
     {
-        return "so far, so good :)";
+        if (_repository.ContainsUser(email))
+        {
+            return "User already exists!\n";
+        }
+        
+        var reader = new Reader(
+            name,
+            birthDate,
+            email,
+            birthDate.ToString("MMddyyyy")
+        );
+        return "Successfully created Reader!\n";
     }
 }

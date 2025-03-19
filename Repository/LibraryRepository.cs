@@ -7,26 +7,23 @@ using System.ComponentModel.DataAnnotations;
 
 public class LibraryRepository
 {
-    [Required] public List<Book> Books { get; set; } = [];
+    [Required]
+    private List<Book> Books { get; set; } = [];
     
     [Required]
-    public List<BookRent> Rents { get; set; } = [];
+    private List<BookRent> Rents { get; set; } = [];
     
     [Required]
-    public List<Librarian> Librarians { get; set; } = [];
-    
-    [Required]
-    public List<Reader> Readers { get; set; } = [];
+    private List<User> Users { get; set; } = [];
 
     public void Populate()
     {
-        var defaultLibrarian = new Librarian(
+        var l1 = new Librarian(
             "Vinícius Azevedo",
             new DateTime(2002, 5, 21),
             "sousa0240@gmail.com",
             "123"
         );
-        Librarians.Add(defaultLibrarian);
         
         var r1 = new Reader(
             "Alice Johnson",
@@ -48,7 +45,7 @@ public class LibraryRepository
             "margaret.taylor@example.com",
             "123"
         );
-        Readers.AddRange(r1, r2, r3);
+        Users.AddRange(l1, r1, r2, r3);
         
         var b1 = new Book(
             "The Catcher in the Rye",
@@ -100,10 +97,12 @@ public class LibraryRepository
 
     public User? GetUserByEmail(string email)
     {
-        return (User?) 
-               Readers.Find(r => r.Email == email) 
-               ??
-               Librarians.Find(l => l.Email == email);
+        return Users.Find(r => r.Email == email);
+    }
+
+    public bool ContainsUser(string email)
+    {
+        return Users.Find(r => r.Email == email) != null;
     }
 
 }

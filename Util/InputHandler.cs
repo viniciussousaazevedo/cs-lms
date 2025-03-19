@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace cs_lms.Util;
 
@@ -29,6 +30,10 @@ public static class InputHandler
     public static string GetValidDate(string message) =>
         GetValidInput(message, input => 
             DateTime.TryParseExact(input, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _));
+    public static string GetValidEmail() =>
+        GetValidInput("email: ", input =>
+            input is not null && Regex.IsMatch(input, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"));
 
 
+    
 }

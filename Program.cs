@@ -29,7 +29,7 @@ public static class Program
         {
             Console.WriteLine("Hello! Welcome to the Library Management System :)");
             Console.WriteLine("Please, log in to use the system");
-            var email = InputHandler.GetNonEmpty("email: ");
+            var email = InputHandler.GetValidEmail();
             var password = InputHandler.GetNonEmpty("password: ");
             _user = Controller.LogIn(email, password);
             if (_user is not null)

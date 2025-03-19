@@ -3,7 +3,7 @@ This repository consists of a simple OO project of a Library Management System. 
 
 ## LMS User Stories:
 ### User
-- [ ] As a User, I want to login, informing email and password
+- [x] As a User, I want to login, informing email and password
 - [ ] As a Librarian, I want to create a Reader, informing name, birthday and email
   - [ ] The default password for the Reader to login must be his birthday, in the format DDMMYYYY
 - [ ] As a Reader, I want to see my profile, containing my book rental history, tastes based on genre, name and email

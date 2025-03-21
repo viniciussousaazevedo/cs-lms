@@ -1,4 +1,7 @@
-﻿using cs_lms.Enum;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using cs_lms.Constants;
+using cs_lms.Enum;
 using cs_lms.Model;
 
 namespace cs_lms.repository;
@@ -11,90 +14,78 @@ public class LibraryRepository
     private List<Book> Books { get; set; } = [];
     
     [Required]
-    private List<BookRent> Rents { get; set; } = [];
+    private List<Rent> Rents { get; set; } = [];
     
     [Required]
     private List<User> Users { get; set; } = [];
 
-    public void Populate()
+    private List<T> LoadModel<T>(string filePath)
     {
-        var l1 = new Librarian(
-            "Vinícius Azevedo",
-            new DateTime(2002, 5, 21),
-            "sousa0240@gmail.com",
-            "123"
-        );
-        
-        var r1 = new Reader(
-            "Alice Johnson",
-            new DateTime(2000, 5, 15),
-            "alice.johnson@example.com",
-            "123"
-        );
-        
-        var r2 = new Reader(
-            "Robert Smith",
-            new DateTime(1985, 10, 3),
-            "robert.smith@example.com",
-            "123"
-        );
-        
-        var r3 = new Reader(
-            "Margaret Taylor",
-            new DateTime(1960, 8, 22),
-            "margaret.taylor@example.com",
-            "123"
-        );
-        Users.AddRange(l1, r1, r2, r3);
-        
-        var b1 = new Book(
-            "The Catcher in the Rye",
-            "A classic novel about teenage rebellion and identity.",
-            "J.D. Salinger",
-            Genre.Fiction,
-            "Holden Coalfield narrates his experiences in New York City.",
-            true
-        );
-        
-        var b2 = new Book(
-            "A Brief History of Time",
-            "An exploration of cosmology and the nature of the universe.",
-            "Stephen Hawking",
-            Genre.Science,
-            "A deep dive into black holes, time travel, and the Big Bang.",
-            true
-        );
-        
-        var b3 = new Book(
-            "Gone Girl",
-            "A psychological thriller about a missing wife.",
-            "Gillian Flynn",
-            Genre.Mystery,
-            "Nick Dunne becomes the prime suspect in his wife's disappearance.",
-            false
-        );
+        try
+        {
+            var json = File.ReadAllText(filePath);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            options.Converters.Add(new JsonStringEnumConverter());
 
-        var b4 = new Book(
-            "The Hobbit",
-            "A fantasy adventure following Bilbo Baggins on a quest.",
-            "J.R.R. Tolkien",
-            Genre.Fantasy,
-            "Bilbo, a hobbit, embarks on an adventure to reclaim a lost treasure.",
-            true
-        );
-        
-        var b5 = new Book(
-            "Steve Jobs",
-            "The biography of Apple's co-founder, Steve Jobs.",
-            "Walter Isaacson",
-            Genre.Biography,
-            "A comprehensive look into Steve Jobs' life and career.",
-            true
-        );
-        Books.AddRange(b1, b2, b3, b4, b5);
-        
+            var data = JsonSerializer.Deserialize<List<T>>(json, options);
+            return data ?? [];
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading data from '{filePath}': {ex.Message}");
+            return [];
+        }
     }
 
+    private void SaveModels<T>(List<T> models, string filePath)
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
+        options.Converters.Add(new JsonStringEnumConverter());
+
+        var updatedJson = JsonSerializer.Serialize(models, options);
+        File.WriteAllText(filePath, updatedJson);
+    }
+
+    public void LoadUsers()
+    {
+        var userData = LoadModel<UserJsonModel>(FilePaths.UsersDb);
+
+        foreach (var user in userData)
+        {
+            if (user.Type == "Librarian")
+                Users.Add(new Librarian(user.Name, user.BirthDate, user.Email, user.Password));
+            else if (user.Type == "Reader")
+                Users.Add(new Reader(user.Name, user.BirthDate, user.Email, user.Password));
+        }
+    }
+
+    public void LoadBooks()
+    {
+        var bookData = LoadModel<Book>(FilePaths.BooksDb);
+
+        foreach (var book in bookData)
+        {
+            Books.Add(new Book(book.Title, book.Description, book.Author, book.Genre, book.Blurb, book.IsAvailable));
+        }
+    }
+
+    public void LoadRents()
+    {
+        var rentData = LoadModel<Rent>(FilePaths.RentsDb);
+
+        foreach (var rent in rentData)
+        {
+            Rents.Add(new Rent(rent.Reader, rent.Book, rent.ExpectedReturnDate));
+        }
+    }
+
+    
     public User? GetUserByEmail(string email)
     {
         return Users.Find(r => r.Email == email);
@@ -103,6 +94,16 @@ public class LibraryRepository
     public bool ContainsUser(string email)
     {
         return Users.Find(r => r.Email == email) != null;
+    }
+
+    public void SaveUser(User user)
+    {
+        Users.Add(user);
+        List<UserJsonModel> models = Users
+            .Select(u => new UserJsonModel(u))
+            .ToList();
+
+        SaveModels(models, FilePaths.UsersDb);
     }
 
 }

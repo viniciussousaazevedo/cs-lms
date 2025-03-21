@@ -27,10 +27,12 @@ public static class Program
     {
         while (true)
         {
-            Console.WriteLine("Hello! Welcome to the Library Management System :)");
+            Console.WriteLine("============================================================");
+            Console.WriteLine("=====Hello! Welcome to the Library Management System :)=====");
+            Console.WriteLine("============================================================");
             Console.WriteLine("Please, log in to use the system");
             var email = InputHandler.GetValidEmail();
-            var password = InputHandler.GetNonEmpty("password: ");
+            var password = InputHandler.GetNonEmpty("Password: ");
             _user = Controller.LogIn(email, password);
             if (_user is not null)
             {

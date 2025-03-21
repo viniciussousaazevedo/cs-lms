@@ -16,11 +16,15 @@ public static class LibrarianMenu
         _libraryController = libraryController;
         while (true)
         {
-            Console.WriteLine("[LIBRARY MANAGEMENT SYSTEM - LIBRARIAN PROFILE]");
+            Console.WriteLine("=============================================================");
+            Console.WriteLine("=======[LIBRARY MANAGEMENT SYSTEM - LIBRARIAN PROFILE]=======");
+            Console.WriteLine("=============================================================");
             Console.WriteLine($"Hello, {_librarian.Name}! What would you like to do?\n");
 
+            Console.WriteLine("-----------------");
             Console.WriteLine("1 - Create Reader");
             Console.WriteLine("2 - Exit\n");
+            Console.WriteLine("-----------------");
 
             var option = Convert.ToInt32(InputHandler.GetNonEmpty("Option: "));
             Console.Write("\n");
@@ -44,7 +48,7 @@ public static class LibrarianMenu
     {
         var name = InputHandler.GetNonEmpty("Reader Name: ");
         var email = InputHandler.GetNonEmpty("Reader Email: ");
-        var strBirthDate = InputHandler.GetValidDate("Reader Birth Date: ");
+        var strBirthDate = InputHandler.GetValidDate("Reader Birth Date (MM/DD/YYYY): ");
         DateTime.TryParseExact(strBirthDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None,
             out DateTime birthDate);
         

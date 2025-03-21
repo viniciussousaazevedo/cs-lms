@@ -9,7 +9,9 @@ public class LibraryController
 
     public LibraryController()
     {
-        _repository.Populate();
+        _repository.LoadUsers();
+        _repository.LoadBooks();
+        _repository.LoadRents();
     }
 
     public User LogIn(string email, string password)
@@ -31,6 +33,7 @@ public class LibraryController
             email,
             birthDate.ToString("MMddyyyy")
         );
-        return "Successfully created Reader!\n";
+        _repository.SaveUser(reader);
+        return "Success!";
     }
 }

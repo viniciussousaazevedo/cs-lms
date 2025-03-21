@@ -17,6 +17,7 @@ public static class ReaderMenu
             Console.WriteLine($"Hello, {_reader.Name}! What would you like to do?\n");
 
             Console.WriteLine("TODO");
+            break;
         }
     }
 }

@@ -1,0 +1,42 @@
+﻿[
+  {
+    "Title": "The Catcher in the Rye",
+    "Description": "A classic novel about teenage rebellion and identity.",
+    "Author": "J.D. Salinger",
+    "Genre": "Fiction",
+    "Blurb": "Holden Coalfield narrates his experiences in New York City.",
+    "IsAvailable": true
+  },
+  {
+    "Title": "A Brief History of Time",
+    "Description": "An exploration of cosmology and the nature of the universe.",
+    "Author": "Stephen Hawking",
+    "Genre": "Science",
+    "Blurb": "A deep dive into black holes, time travel, and the Big Bang.",
+    "IsAvailable": true
+  },
+  {
+    "Title": "Gone Girl",
+    "Description": "A psychological thriller about a missing wife.",
+    "Author": "Gillian Flynn",
+    "Genre": "Mystery",
+    "Blurb": "Nick Dunne becomes the prime suspect in his wife's disappearance.",
+    "IsAvailable": false
+  },
+  {
+    "Title": "The Hobbit",
+    "Description": "A fantasy adventure following Bilbo Baggins on a quest.",
+    "Author": "J.R.R. Tolkien",
+    "Genre": "Fantasy",
+    "Blurb": "Bilbo, a hobbit, embarks on an adventure to reclaim a lost treasure.",
+    "IsAvailable": true
+  },
+  {
+    "Title": "Steve Jobs",
+    "Description": "The biography of Apple's co-founder, Steve Jobs.",
+    "Author": "Walter Isaacson",
+    "Genre": "Biography",
+    "Blurb": "A comprehensive look into Steve Jobs' life and career.",
+    "IsAvailable": true
+  }
+]

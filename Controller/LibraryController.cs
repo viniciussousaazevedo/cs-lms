@@ -31,7 +31,8 @@ public class LibraryController
             name,
             birthDate,
             email,
-            birthDate.ToString("MMddyyyy")
+            birthDate.ToString("MMddyyyy"),
+            []
         );
         _repository.SaveUser(reader);
         return "Success!";

@@ -6,5 +6,5 @@ using System.ComponentModel.DataAnnotations;
 public class Librarian(string name, DateTime birthday, string email, string password) 
     : User(name, birthday, email, password)
 {
-    protected override string GetRole() => "Librarian";
+    public override string GetRole() => "Librarian";
 }

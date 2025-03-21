@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using cs_lms.Constants;
+using cs_lms.DTO;
 using cs_lms.Enum;
 using cs_lms.Model;
 
@@ -54,35 +55,22 @@ public class LibraryRepository
 
     public void LoadUsers()
     {
-        var userData = LoadModel<UserJsonModel>(FilePaths.UsersDb);
-
-        foreach (var user in userData)
-        {
-            if (user.Type == "Librarian")
-                Users.Add(new Librarian(user.Name, user.BirthDate, user.Email, user.Password));
-            else if (user.Type == "Reader")
-                Users.Add(new Reader(user.Name, user.BirthDate, user.Email, user.Password));
-        }
+        var librariansData = LoadModel<LibrarianDto>(FilePaths.LibrariansDb);
+        librariansData.ForEach(dto => Users.Add(new Librarian(dto.Name, dto.Birthday, dto.Email, dto.Password)));
+        var readersData = LoadModel<ReaderDto>(FilePaths.ReadersDb);
+        readersData.ForEach(dto => Users.Add(new Reader(dto.Name, dto.Birthday, dto.Email, dto.Password, dto.Taste)));
     }
 
     public void LoadBooks()
     {
         var bookData = LoadModel<Book>(FilePaths.BooksDb);
-
-        foreach (var book in bookData)
-        {
-            Books.Add(new Book(book.Title, book.Description, book.Author, book.Genre, book.Blurb, book.IsAvailable));
-        }
+        bookData.ForEach(dto => Books.Add(new Book(dto.Title, dto.Description, dto.Author, dto.Genre, dto.Blurb, dto.IsAvailable)));
     }
 
     public void LoadRents()
     {
         var rentData = LoadModel<Rent>(FilePaths.RentsDb);
-
-        foreach (var rent in rentData)
-        {
-            Rents.Add(new Rent(rent.Reader, rent.Book, rent.ExpectedReturnDate));
-        }
+        rentData.ForEach(dto => Rents.Add(new Rent(dto.Reader, dto.Book, dto.ExpectedReturnDate)));
     }
 
     
@@ -99,11 +87,18 @@ public class LibraryRepository
     public void SaveUser(User user)
     {
         Users.Add(user);
-        List<UserJsonModel> models = Users
-            .Select(u => new UserJsonModel(u))
+        var librarianDtos = Users
+            .OfType<Librarian>()
+            .Select(l => new LibrarianDto(l))
+            .ToList();
+        var readersDtos = Users
+            .OfType<Reader>()
+            .Select(r => new ReaderDto(r))
             .ToList();
 
-        SaveModels(models, FilePaths.UsersDb);
+
+        SaveModels(librarianDtos, FilePaths.LibrariansDb);
+        SaveModels(readersDtos, FilePaths.ReadersDb);
     }
 
 }
